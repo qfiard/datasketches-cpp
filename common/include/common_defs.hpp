@@ -39,13 +39,13 @@ template<typename A> using string = std::basic_string<char, std::char_traits<cha
 
 // common random declarations
 namespace random_utils {
-  static std::random_device rd; // possibly unsafe in MinGW with GCC < 9.2
-  static thread_local std::mt19937_64 rand(rd());
-  static thread_local std::uniform_real_distribution<> next_double(0.0, 1.0);
-  static thread_local std::uniform_int_distribution<uint64_t> next_uint64(0, UINT64_MAX);
+  inline std::random_device rd; // possibly unsafe in MinGW with GCC < 9.2
+  inline thread_local std::mt19937_64 rand(rd());
+  inline thread_local std::uniform_real_distribution<> next_double(0.0, 1.0);
+  inline thread_local std::uniform_int_distribution<uint64_t> next_uint64(0, UINT64_MAX);
 
   // thread-safe random bit
-  static thread_local std::independent_bits_engine<std::mt19937, 1, uint32_t>
+  inline thread_local std::independent_bits_engine<std::mt19937, 1, uint32_t>
     random_bit(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()
       + std::hash<std::thread::id>{}(std::this_thread::get_id())));
 
